@@ -12,18 +12,18 @@ namespace TA.Application.Services
                 throw new ArgumentNullException("Password or salt cannot be null or empty.");
             
 
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password); // change password type string to bytes 
+            byte[] saltBytes = Encoding.UTF8.GetBytes(salt); // change salt string to bytes
 
-            using (var hmac = new HMACSHA256(saltBytes))
+            using (var hmac = new HMACSHA256(saltBytes)) //give salt to bbytes as a key to sha256 alghoritm
             {
-                byte[] hashBytes = hmac.ComputeHash(passwordBytes);
+                byte[] hashBytes = hmac.ComputeHash(passwordBytes);// tell sha to hash password that changed to bytes 
 
                 return Convert.ToBase64String(hashBytes);
             }
         }
 
-        public bool VerifiedPassword(string password, string salt, string hash)
+        public bool VerifyPassword(string password, string salt, string hash)
         {
             if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(salt) || string.IsNullOrEmpty(hash))
                 throw new ArgumentNullException("Password, salt, or hash cannot be null or empty.");

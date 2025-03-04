@@ -33,7 +33,7 @@ namespace TA.Application.Services
 
 
 
-            //make sure that user saves in db make sure repository does have a method to save newly created user !!!!!!!!!!!!!!
+            //make sure that users save in db make sure IUserRepository does have a method to save newly created user !!!!!!!!!!!!!!
             _userRepository.SaveNewUser(user); //thats more like it 
 
         }
@@ -44,7 +44,7 @@ namespace TA.Application.Services
             if (fetchedUser == null)
                 throw new Exception("Invalid username or password");
 
-            bool isPasswordValid = _passwordService.VerifiedPassword(request.Password, fetchedUser.Salt, fetchedUser.Password);
+            bool isPasswordValid = _passwordService.VerifyPassword(request.Password, fetchedUser.Salt, fetchedUser.Password);
             if (!isPasswordValid)
                 throw new Exception("Invalid username or password");
 
