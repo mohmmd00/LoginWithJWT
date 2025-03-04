@@ -34,6 +34,7 @@ namespace TA.Application.Services
 
 
             //make sure that user saves in db make sure repository does have a method to save newly created user !!!!!!!!!!!!!!
+            _userRepository.SaveNewUser(user); //thats more like it 
 
         }
         public LoginResponse Login(LoginRequest request)
