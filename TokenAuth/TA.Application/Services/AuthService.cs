@@ -19,16 +19,15 @@ namespace TA.Application.Services
             _jwtService = jwtService;
         }
 
-        public async Task Register(RegisterRequest request)
+        public void Register(RegisterRequest request)
         {
             var existingUser = _userRepository.GetUserby(request.Username);
-            if (existingUser != null)
-            {
+            if (existingUser != null) //check if any user exists in db with this username
                 throw new Exception("Username already exists.");
-            }
 
-            string salt = Guid.NewGuid().ToString();
-            string passwordHash = _passwordService.HashedPassword(request.Password, salt);
+
+            string salt = Guid.NewGuid().ToString(); //create a anew guid for salt 
+            string passwordHash = _passwordService.HashedPassword(request.Password, salt); // give password and new generated salt to hasher 
 
             var user = new User(request.Username, passwordHash, salt);
 
@@ -37,11 +36,13 @@ namespace TA.Application.Services
             //make sure that user saves in db make sure repository does have a method to save newly created user !!!!!!!!!!!!!!
 
         }
-        public async Task<LoginResponse> Login(LoginRequest request)
+        public LoginResponse Login(LoginRequest request)
         {
             var fetchedUser = _userRepository.GetUserby(request.Username);
+
             if (fetchedUser == null)
                 throw new Exception("Invalid username or password");
+
             bool isPasswordValid = _passwordService.VerifiedPassword(request.Password, fetchedUser.Salt, fetchedUser.Password);
             if (!isPasswordValid)
                 throw new Exception("Invalid username or password");
@@ -50,7 +51,7 @@ namespace TA.Application.Services
 
             var newSession = new Session(fetchedUser.PrimaryId, sessionId);
 
-            _sessionRepository.SaveChanges(newSession);
+            _sessionRepository.SaveNewSession(newSession);
 
             string token = _jwtService.GenerateToken(fetchedUser.PrimaryId, sessionId);
 
