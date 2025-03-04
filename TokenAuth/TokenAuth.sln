@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TA.Application", "TA.Applic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{D1619D97-9B58-41DF-8563-9F7959AE74D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TA.Infrastructure.Sqlite", "TA.Infrastructure.Sqlite\TA.Infrastructure.Sqlite.csproj", "{41DC81C7-8B25-41B4-A3A2-EEE84FB7345A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{21F971D0-155F-4EDB-AF33-A103B860D565}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TA.Presentation.Webapi", "TA.Presentation.Webapi\TA.Presentation.Webapi.csproj", "{9698F230-12A6-4FBE-A1B2-9D0864082F97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +33,14 @@ Global
 		{0C23BE9D-333F-482B-B13F-9433894E306D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C23BE9D-333F-482B-B13F-9433894E306D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C23BE9D-333F-482B-B13F-9433894E306D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41DC81C7-8B25-41B4-A3A2-EEE84FB7345A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41DC81C7-8B25-41B4-A3A2-EEE84FB7345A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41DC81C7-8B25-41B4-A3A2-EEE84FB7345A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41DC81C7-8B25-41B4-A3A2-EEE84FB7345A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9698F230-12A6-4FBE-A1B2-9D0864082F97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9698F230-12A6-4FBE-A1B2-9D0864082F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9698F230-12A6-4FBE-A1B2-9D0864082F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9698F230-12A6-4FBE-A1B2-9D0864082F97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -34,5 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6CBA64E1-57CB-427C-8D8F-8EB10B3DAF46} = {6E131CDF-3D67-4B9D-8D8E-05F13F356761}
 		{0C23BE9D-333F-482B-B13F-9433894E306D} = {A547C97F-09BB-4FB5-907B-1D558B22F1C2}
+		{41DC81C7-8B25-41B4-A3A2-EEE84FB7345A} = {D1619D97-9B58-41DF-8563-9F7959AE74D9}
+		{9698F230-12A6-4FBE-A1B2-9D0864082F97} = {21F971D0-155F-4EDB-AF33-A103B860D565}
 	EndGlobalSection
 EndGlobal

@@ -21,13 +21,13 @@ namespace TA.Application.Services
 
         public void Register(RegisterRequest request)
         {
-            var existingUser = _userRepository.GetUserby(request.Username);
-            if (existingUser != null) //check if any user exists in db with this username
+            var selectedUser = _userRepository.GetUserbyUsername(request.Username);
+            if (selectedUser != null) //check if any user exists in db with this username
                 throw new Exception("Username already exists.");
 
 
             string salt = Guid.NewGuid().ToString(); //create a anew guid for salt 
-            string passwordHash = _passwordService.HashedPassword(request.Password, salt); // give password and new generated salt to hasher 
+            string passwordHash = _passwordService.ToHashPassword(request.Password, salt); // give password and new generated salt to hasher 
 
             var user = new User(request.Username, passwordHash, salt);
 
@@ -39,12 +39,12 @@ namespace TA.Application.Services
         }
         public LoginResponse Login(LoginRequest request)
         {
-            var fetchedUser = _userRepository.GetUserby(request.Username);
+            var fetchedUser = _userRepository.GetUserbyUsername(request.Username);
 
             if (fetchedUser == null)
                 throw new Exception("Invalid username or password");
 
-            bool isPasswordValid = _passwordService.VerifyPassword(request.Password, fetchedUser.Salt, fetchedUser.Password);
+            bool isPasswordValid = _passwordService.ToVerifyPassword(request.Password, fetchedUser.Salt, fetchedUser.Password);
             if (!isPasswordValid)
                 throw new Exception("Invalid username or password");
 

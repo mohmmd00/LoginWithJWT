@@ -1,0 +1,6 @@
+@TA.Presentation.Webapi_HostAddress = https://localhost:7053
+
+GET {{TA.Presentation.Webapi_HostAddress}}/AuthController/
+Accept: application/json
+
+###

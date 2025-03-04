@@ -5,19 +5,40 @@ namespace TA.Infrastructure.Sqlite.Repository
 {
     public class UserRepository : IUserRepository
     {
-        public User GetUserby(string username)
+        private readonly AuthContext _context;
+
+        public UserRepository(AuthContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public User GetUserbyUsername(string username)
+        {
+            var selecteduser = _context.Users.FirstOrDefault(x=>x.Username == username);
+            return selecteduser;
+        }
+        public List<User> GetAllUsers()
+        {
+            return _context.Users.ToList();
         }
 
         public bool IsUserExistsBy(int id)
         {
-            throw new NotImplementedException();
+            bool status = false;
+            var chodenuser = _context.Users.Find(id);
+            if (chodenuser != null)
+            {
+                status = true;
+                return status;
+            }
+
+            return status;
         }
 
         public void SaveNewUser(User user)
         {
-            throw new NotImplementedException();
+            _context.Add(user);
+            _context.SaveChanges();
         }
     }
 }
