@@ -5,6 +5,8 @@ namespace TA.Domain.Interfaces
     public interface IUserRepository
     {
         User GetUserby(string username);
+
         bool IsUserExistsBy(int id);
+        void SaveNewUser(User user);
     }
 }

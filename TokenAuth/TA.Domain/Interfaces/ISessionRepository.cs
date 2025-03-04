@@ -5,6 +5,6 @@ namespace TA.Domain.Interfaces
     public interface ISessionRepository
     {
         Session GetSessionBy(int userId);
-        void SaveChanges(Session session);
+        void SaveNewSession(Session session);
     }
 }
