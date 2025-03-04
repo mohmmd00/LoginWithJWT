@@ -2,6 +2,7 @@
 using TA.Domain.Entities;
 using TA.Domain.Interfaces;
 
+
 namespace TA.Application.Services
 {
     public class AuthService

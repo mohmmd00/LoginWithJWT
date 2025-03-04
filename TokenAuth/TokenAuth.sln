@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{6E131C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TA.Domain", "TA.Domain\TA.Domain.csproj", "{6CBA64E1-57CB-427C-8D8F-8EB10B3DAF46}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{A547C97F-09BB-4FB5-907B-1D558B22F1C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TA.Application", "TA.Application\TA.Application.csproj", "{0C23BE9D-333F-482B-B13F-9433894E306D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,11 +21,16 @@ Global
 		{6CBA64E1-57CB-427C-8D8F-8EB10B3DAF46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CBA64E1-57CB-427C-8D8F-8EB10B3DAF46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CBA64E1-57CB-427C-8D8F-8EB10B3DAF46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C23BE9D-333F-482B-B13F-9433894E306D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C23BE9D-333F-482B-B13F-9433894E306D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C23BE9D-333F-482B-B13F-9433894E306D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C23BE9D-333F-482B-B13F-9433894E306D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6CBA64E1-57CB-427C-8D8F-8EB10B3DAF46} = {6E131CDF-3D67-4B9D-8D8E-05F13F356761}
+		{0C23BE9D-333F-482B-B13F-9433894E306D} = {A547C97F-09BB-4FB5-907B-1D558B22F1C2}
 	EndGlobalSection
 EndGlobal
