@@ -27,7 +27,7 @@ namespace TA.Application.Services
 
 
             string salt = Guid.NewGuid().ToString(); //create a anew guid for salt 
-            string passwordHash = _passwordService.ToHashPassword(request.Password, salt); // give password and new generated salt to hasher 
+            string passwordHash = _passwordService.HashPassword(request.Password, salt); // give password and new generated salt to hasher 
 
             var user = new User(request.Username, passwordHash, salt);
 
@@ -39,25 +39,52 @@ namespace TA.Application.Services
         }
         public LoginResponse Login(LoginRequest request)
         {
+            var response = new LoginResponse();
+
             var fetchedUser = _userRepository.GetUserbyUsername(request.Username);
 
             if (fetchedUser == null)
-                throw new Exception("Invalid username or password");
+            {
+                response.IsInformationCorrect = false;
+                response.Message = "Invalid username or password";
+                response.Token = "";
 
-            bool isPasswordValid = _passwordService.ToVerifyPassword(request.Password, fetchedUser.Salt, fetchedUser.Password);
-            if (!isPasswordValid)
-                throw new Exception("Invalid username or password");
+            }
+            else if (fetchedUser != null)
+            {
+                bool isPasswordValid = _passwordService.VerifyPassword(request.Password, fetchedUser.Salt, fetchedUser.Password);
+                if (isPasswordValid)
+                {
+                    string sessionId = Guid.NewGuid().ToString();
 
-            string sessionId = Guid.NewGuid().ToString();
+                    var newSession = new Session(fetchedUser.PrimaryId, sessionId);
 
-            var newSession = new Session(fetchedUser.PrimaryId, sessionId);
+                    _sessionRepository.SaveNewSession(newSession);
 
-            _sessionRepository.SaveNewSession(newSession);
+                    response.IsInformationCorrect = true;
+                    response.Message = "Login successful";
+                    response.Token = _jwtService.GenerateToken(fetchedUser.PrimaryId, sessionId);
+                }
+                else
+                {
+                    response.IsInformationCorrect = false;
+                    response.Message = "Invalid username or password";
+                    response.Token = "";
+                }
+                
+            }
+            else
+            {
+                throw new Exception("somthing went wrong!");
+            }
 
-            string token = _jwtService.GenerateToken(fetchedUser.PrimaryId, sessionId);
 
 
-            return new LoginResponse { Token = token };
+
+
+
+
+            return response;
         }
     }
 }

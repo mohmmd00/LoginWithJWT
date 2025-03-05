@@ -20,7 +20,15 @@ namespace TA.Presentation.Webapi.Controllers
         {
 
             var responce = _authService.Login(request);
-            return Ok(responce);
+
+            if (responce.IsInformationCorrect)
+            {
+                return Ok(responce);
+            }
+            else
+            {
+                return Unauthorized(responce);
+            }
 
         }
 

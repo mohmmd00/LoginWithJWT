@@ -16,7 +16,7 @@ namespace TA.Presentation.Webapi
             builder.Services.AddDbContext<AuthContext>(options => options.UseSqlite("Data Source=..\\TA.Infrastructure.Sqlite\\app.db"));
 
             // Add services to the container.
-            builder.Services.AddScoped<IUserRepository, UserRepository>(); // works with database and we dont need to make a new instance of these services every time we use them 
+            builder.Services.AddScoped<IUserRepository, UserRepository>(); //manage connections to data base with transient we have to make multiple connections to database and that have security and performance problems
             builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 
 

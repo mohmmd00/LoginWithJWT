@@ -6,7 +6,7 @@ namespace TA.Application.Services
 {
     public class PasswordService : IPasswordService
     {
-        public string ToHashPassword(string password, string salt)
+        public string HashPassword(string password, string salt)
         {
             if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(salt))
                 throw new ArgumentNullException("Password or salt cannot be null or empty.");
@@ -23,15 +23,18 @@ namespace TA.Application.Services
             }
         }
 
-        public bool ToVerifyPassword(string password, string salt, string hash)
+        public bool VerifyPassword(string password, string salt, string hash)
         {
             if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(salt) || string.IsNullOrEmpty(hash))
-                throw new ArgumentNullException("Password, salt, or hash cannot be null or empty.");
+            {
+                return false;
+            }
+            else
+            {
+                string resultOfHash = HashPassword(password, salt);
 
-
-            string resultOfHash = ToHashPassword(password, salt);
-
-            return resultOfHash == hash;
+                return resultOfHash == hash;
+            }
         }
     }
 }
