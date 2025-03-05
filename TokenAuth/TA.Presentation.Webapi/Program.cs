@@ -1,5 +1,9 @@
 
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using TA.Application.Services;
 using TA.Domain.Interfaces;
 using TA.Infrastructure.Sqlite;
@@ -27,7 +31,19 @@ namespace TA.Presentation.Webapi
 
 
             builder.Services.AddScoped<AuthService>();
-
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(x =>
+            {
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,           
+                    ValidateLifetime = true,           
+                    ValidateIssuerSigningKey = true,  
+                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
+                };
+            });
 
 
             builder.Services.AddControllers();
@@ -46,8 +62,9 @@ namespace TA.Presentation.Webapi
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
+
 
 
             app.MapControllers();

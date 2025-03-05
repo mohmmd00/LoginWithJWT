@@ -59,7 +59,7 @@ namespace TA.Application.Services
 
                     var newSession = new Session(fetchedUser.PrimaryId, sessionId);
 
-                    _sessionRepository.SaveNewSession(newSession);
+                    _sessionRepository.CreateSession(newSession);
 
                     response.IsInformationCorrect = true;
                     response.Message = "Login successful";

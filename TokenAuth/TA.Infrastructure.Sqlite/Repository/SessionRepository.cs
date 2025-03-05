@@ -17,7 +17,7 @@ namespace TA.Infrastructure.Sqlite.Repository
             return _context.Sessions.Find(userId);
         }
 
-        public void SaveNewSession(Session session)
+        public void CreateSession(Session session)
         {
             _context.Update(session);
             _context.SaveChanges();

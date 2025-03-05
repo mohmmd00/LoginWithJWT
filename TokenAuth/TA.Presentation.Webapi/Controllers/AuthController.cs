@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TA.Application.DTO_s;
 using TA.Application.Services;
 
@@ -9,6 +11,7 @@ namespace TA.Presentation.Webapi.Controllers
     public class AuthController : Controller
     {
         private readonly AuthService _authService;
+        private readonly SecretMessageService _secretMessageService;
 
         public AuthController(AuthService authService)
         {
@@ -37,6 +40,25 @@ namespace TA.Presentation.Webapi.Controllers
         {
             _authService.Register(request);
             return Ok();
+        }
+
+
+        [Authorize]
+        [HttpPost("createNewMessage")]
+        public IActionResult CreateMessage(SecretMessageRequest request)
+        {
+            _secretMessageService.CreateNewMessage(request);
+            return Ok("message created");
+        }
+
+        [Authorize]
+        [HttpGet("AllMessages")]
+        public IActionResult GetAllSecretMessages() 
+        {
+            //var listofmessages = _secretMessageService.GetSecretsAll();
+            //return Ok(listofmessages);
+
+            return Ok("this is my secret token");
         }
 
     }
