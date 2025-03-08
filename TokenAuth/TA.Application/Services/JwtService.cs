@@ -29,8 +29,8 @@ namespace TA.Application.Services
 
             var newClaims = new Claim[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()), // primary id of this payload
-                new Claim("sessionId", sessionId), //added sission as another information that needs to be in jwt
+                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+                new Claim("sessionId", sessionId.ToString()), //added sission as another information that needs to be in jwt
                 new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64), //tarikh sodoor
 
                 /*we can add exp here but security token will do it by default*/

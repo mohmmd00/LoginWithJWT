@@ -47,7 +47,6 @@ namespace TA.Presentation.Webapi
 
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -63,6 +62,7 @@ namespace TA.Presentation.Webapi
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
+            app.UseMiddleware<SessionValidationMiddleware>();
             app.UseAuthorization();
 
 

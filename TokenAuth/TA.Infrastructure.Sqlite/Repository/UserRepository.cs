@@ -35,10 +35,14 @@ namespace TA.Infrastructure.Sqlite.Repository
             return status;
         }
 
-        public void SaveNewUser(User user)
+        public void CreateUser(User user)
         {
             _context.Add(user);
-            _context.SaveChanges();
+            
+        }
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -7,7 +7,6 @@ namespace TA.Infrastructure.Sqlite
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Session> Sessions { get; set; }
-        public DbSet<SecretMessage> SecretMessages { get; set; }
         public AuthContext(DbContextOptions options) : base(options)
         {
 
@@ -17,7 +16,6 @@ namespace TA.Infrastructure.Sqlite
         {
             modelBuilder.Entity<User>().HasKey(key => key.PrimaryId);
             modelBuilder.Entity<Session>().HasKey(key => key.UserId);
-            modelBuilder.Entity<SecretMessage>().HasKey(x => x.PrimaryId);
 
 
             modelBuilder.Entity<Session>().HasOne<User>().WithOne().HasForeignKey<Session>(x => x.UserId);

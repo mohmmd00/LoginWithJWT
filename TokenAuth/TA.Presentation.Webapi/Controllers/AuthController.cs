@@ -11,19 +11,35 @@ namespace TA.Presentation.Webapi.Controllers
     public class AuthController : Controller
     {
         private readonly AuthService _authService;
-        private readonly SecretMessageService _secretMessageService;
-
         public AuthController(AuthService authService)
         {
             _authService = authService;
         }
+
+
+
+        [HttpPost("Register")]
+        public IActionResult Register([FromBody] RegisterRequest request)
+        {
+            var response = _authService.Register(request);
+
+            if (response.IsInformationCorrect)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest(response);
+            }
+
+        }
+
         // POST: AuthController/Create
         [HttpPost("Login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
 
             var responce = _authService.Login(request);
-
             if (responce.IsInformationCorrect)
             {
                 return Ok(responce);
@@ -35,30 +51,13 @@ namespace TA.Presentation.Webapi.Controllers
 
         }
 
-        [HttpPost("Register")]
-        public IActionResult Register([FromBody] RegisterRequest request)
-        {
-            _authService.Register(request);
-            return Ok();
-        }
 
 
         [Authorize]
-        [HttpPost("createNewMessage")]
-        public IActionResult CreateMessage(SecretMessageRequest request)
+        [HttpGet("SecretMessage")]
+        public IActionResult GetSecretMessage() 
         {
-            _secretMessageService.CreateNewMessage(request);
-            return Ok("message created");
-        }
-
-        [Authorize]
-        [HttpGet("AllMessages")]
-        public IActionResult GetAllSecretMessages() 
-        {
-            //var listofmessages = _secretMessageService.GetSecretsAll();
-            //return Ok(listofmessages);
-
-            return Ok("this is my secret token");
+            return Ok("This is my secret message : 1231231231232fjeoigneoerGVERGVBIe");
         }
 
     }

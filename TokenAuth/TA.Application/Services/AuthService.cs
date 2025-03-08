@@ -19,71 +19,98 @@ namespace TA.Application.Services
             _jwtService = jwtService;
         }
 
-        public void Register(RegisterRequest request)
+        public RegisterResponse Register(RegisterRequest request)
         {
-            var selectedUser = _userRepository.GetUserbyUsername(request.Username);
-            if (selectedUser != null) //check if any user exists in db with this username
-                throw new Exception("Username already exists.");
 
+            var response = new RegisterResponse();
 
-            string salt = Guid.NewGuid().ToString(); //create a anew guid for salt 
-            string passwordHash = _passwordService.HashPassword(request.Password, salt); // give password and new generated salt to hasher 
+            if (string.IsNullOrWhiteSpace(request.Password) || string.IsNullOrWhiteSpace(request.Username))
+            {
+                response.IsInformationCorrect = false;
+                response.Message = "Username or password cannot be null or white space";
+                return response;
+            }
+            else
+            {
+                var selectedUser = _userRepository.GetUserbyUsername(request.Username);
+                if (selectedUser != null)
+                {
+                    response.IsInformationCorrect = false;
+                    response.Message = "username is already exists try another one";
+                    return response;
+                }
+                else
+                {
+                    string salt = Guid.NewGuid().ToString(); //create a anew guid for salt 
+                    string passwordHash = _passwordService.HashPassword(request.Password, salt); // give password and new generated salt to hasher 
 
-            var user = new User(request.Username, passwordHash, salt);
+                    var user = new User(request.Username, passwordHash, salt);
 
+                    //make sure that users save in db make sure IUserRepository does have a method to save newly created user !!!!!!!!!!!!!!
+                    _userRepository.CreateUser(user); //thats more like it 
+                    _userRepository.SaveChanges();
 
+                    var savedUser = _userRepository.GetUserbyUsername(user.Username);
+                    var newSession = new Session(savedUser.PrimaryId, Guid.NewGuid().ToString());
 
-            //make sure that users save in db make sure IUserRepository does have a method to save newly created user !!!!!!!!!!!!!!
-            _userRepository.SaveNewUser(user); //thats more like it 
+                    _sessionRepository.CreateSession(newSession);
+                    _sessionRepository.SaveChanges();
+
+                    response.IsInformationCorrect = true;
+                    response.Message = "register was successful";
+                }
+                return response;
+            }
 
         }
         public LoginResponse Login(LoginRequest request)
         {
             var response = new LoginResponse();
 
-            var fetchedUser = _userRepository.GetUserbyUsername(request.Username);
 
-            if (fetchedUser == null)
+            if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
             {
                 response.IsInformationCorrect = false;
-                response.Message = "Invalid username or password";
+                response.Message = "Username or password cannot be null or white space";
                 response.Token = "";
-
-            }
-            else if (fetchedUser != null)
-            {
-                bool isPasswordValid = _passwordService.VerifyPassword(request.Password, fetchedUser.Salt, fetchedUser.Password);
-                if (isPasswordValid)
-                {
-                    string sessionId = Guid.NewGuid().ToString();
-
-                    var newSession = new Session(fetchedUser.PrimaryId, sessionId);
-
-                    _sessionRepository.CreateSession(newSession);
-
-                    response.IsInformationCorrect = true;
-                    response.Message = "Login successful";
-                    response.Token = _jwtService.GenerateToken(fetchedUser.PrimaryId, sessionId);
-                }
-                else
-                {
-                    response.IsInformationCorrect = false;
-                    response.Message = "Invalid username or password";
-                    response.Token = "";
-                }
-                
+                 
             }
             else
             {
-                throw new Exception("somthing went wrong!");
+                var fetchedUser = _userRepository.GetUserbyUsername(request.Username);
+                if (fetchedUser == null)
+                {      
+                    response.IsInformationCorrect = false;
+                    response.Message = "Invalid username or password";
+                    response.Token = "";
+
+                }
+                else
+                {
+                    bool isPasswordValid = _passwordService.VerifyPassword(request.Password, fetchedUser.Salt, fetchedUser.Password);
+                    if (isPasswordValid)
+                    {
+                        string sessionId = Guid.NewGuid().ToString();
+
+                        var newSession = new Session(fetchedUser.PrimaryId, sessionId);
+
+                        _sessionRepository.CreateSession(newSession);
+                        _sessionRepository.SaveChanges();
+
+                        response.IsInformationCorrect = true;
+                        response.Message = "Login successful";
+                        response.Token = _jwtService.GenerateToken(fetchedUser.PrimaryId, sessionId);
+                    }
+                    else
+                    {
+                        response.IsInformationCorrect = false;
+                        response.Message = "Invalid username or password";
+                        response.Token = "";
+                    }
+
+                }
+
             }
-
-
-
-
-
-
-
             return response;
         }
     }

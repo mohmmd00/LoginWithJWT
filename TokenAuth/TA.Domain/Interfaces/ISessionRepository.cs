@@ -5,6 +5,9 @@ namespace TA.Domain.Interfaces
     public interface ISessionRepository
     {
         Session GetSessionBy(int userId);
-        void CreateSession(Session session);
+        Task CreateSession(Session session);
+        void UpdateSession(Session session);
+        Task SaveChanges();
+        Task<Session> GetByUserId(int userId);
     }
 }

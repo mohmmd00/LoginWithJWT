@@ -1,4 +1,5 @@
-﻿using TA.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TA.Domain.Entities;
 using TA.Domain.Interfaces;
 
 namespace TA.Infrastructure.Sqlite.Repository
@@ -16,11 +17,23 @@ namespace TA.Infrastructure.Sqlite.Repository
         {
             return _context.Sessions.Find(userId);
         }
+        public async Task<Session> GetByUserId(int userId)
+        {
+            return await _context.Sessions.FirstOrDefaultAsync(s => s.UserId == userId);
+        }
 
-        public void CreateSession(Session session)
+        public void UpdateSession(Session session)
         {
             _context.Update(session);
-            _context.SaveChanges();
+        }
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task CreateSession(Session session)
+        {
+            await _context.AddAsync(session);
         }
     }
 }

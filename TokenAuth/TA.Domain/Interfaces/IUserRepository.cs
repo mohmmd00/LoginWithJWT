@@ -6,6 +6,7 @@ namespace TA.Domain.Interfaces
         User GetUserbyUsername(string username);
         List<User> GetAllUsers();
         bool IsUserExistsBy(int id);
-        void SaveNewUser(User user);
+        void CreateUser(User user);
+        Task SaveChanges();
     }
 }
