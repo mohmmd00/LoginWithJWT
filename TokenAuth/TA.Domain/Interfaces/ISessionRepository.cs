@@ -8,6 +8,6 @@ namespace TA.Domain.Interfaces
         Task CreateSession(Session session);
         void UpdateSession(Session session);
         Task SaveChanges();
-        Task<Session> GetByUserId(int userId);
+        Task<Session> GetSessionByUserId(int userId);
     }
 }

@@ -44,7 +44,7 @@ public class SessionValidationMiddleware
             }
 
             int userId = int.Parse(userIdClaim);
-            var currentSession = await sessionRepository.GetByUserId(userId);
+            var currentSession = await sessionRepository.GetSessionByUserId(userId);
 
             if (currentSession == null || currentSession.SessionId != sessionIdFromToken)
             {

@@ -17,7 +17,7 @@ namespace TA.Infrastructure.Sqlite.Repository
         {
             return _context.Sessions.Find(userId);
         }
-        public async Task<Session> GetByUserId(int userId)
+        public async Task<Session> GetSessionByUserId(int userId)
         {
             return await _context.Sessions.FirstOrDefaultAsync(s => s.UserId == userId);
         }
