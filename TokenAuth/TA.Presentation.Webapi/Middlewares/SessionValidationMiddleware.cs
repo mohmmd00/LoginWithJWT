@@ -33,8 +33,8 @@ public class SessionValidationMiddleware
 
 
             //we have nameidentifier insted of sub yu must change it ....
-            var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier/*code works but you need to change this to JwtRegisteredClaimNames i dont know how it got change*/)?.Value;
-            var sessionIdFromToken = context.User.FindFirst("sessionId")?.Value;
+            var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var sessionIdFromToken = context.User.FindFirst("sessionId").Value;
 
             if (string.IsNullOrEmpty(userIdClaim) || string.IsNullOrEmpty(sessionIdFromToken))
             {

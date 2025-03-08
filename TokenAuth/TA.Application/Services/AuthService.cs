@@ -94,7 +94,7 @@ namespace TA.Application.Services
 
                         var newSession = new Session(fetchedUser.PrimaryId, sessionId);
 
-                        _sessionRepository.CreateSession(newSession);
+                        _sessionRepository.UpdateSession(newSession);
                         _sessionRepository.SaveChanges();
 
                         response.IsInformationCorrect = true;

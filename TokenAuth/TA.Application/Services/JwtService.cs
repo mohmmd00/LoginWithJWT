@@ -17,12 +17,10 @@ namespace TA.Application.Services
 
         public string GenerateToken(int userId, string sessionId)
         {
-            if (string.IsNullOrWhiteSpace(sessionId))
-                throw new Exception("session id cannot be empty");
 
             string secretKey = _configure["JwtSettings:SecretKey"]; // must impl in appsetting for configure to fetch seceret key i think its wrote by default DontTrust stackoverflow
             if (string.IsNullOrEmpty(secretKey))
-                throw new InvalidOperationException("JWT secret key is not configured.");
+                throw new InvalidOperationException("JWT secret key is not in appsetting ");
 
 
             var key = Encoding.UTF8.GetBytes(secretKey); // we need to make every thing encode ... base64
