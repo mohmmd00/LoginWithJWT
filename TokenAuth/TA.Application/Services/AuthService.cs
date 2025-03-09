@@ -50,8 +50,8 @@ namespace TA.Application.Services
                     _userRepository.CreateUser(user); //thats more like it 
                     _userRepository.SaveChanges();
 
-                    var savedUser = _userRepository.GetUserbyUsername(user.Username);
-                    var newSession = new Session(savedUser.PrimaryId, Guid.NewGuid().ToString());
+                    var addedUser = _userRepository.GetUserbyUsername(user.Username);
+                    var newSession = new Session(addedUser.PrimaryId, Guid.NewGuid().ToString());
 
                     _sessionRepository.CreateSession(newSession);
                     _sessionRepository.SaveChanges();
