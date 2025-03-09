@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.JsonWebTokens;
 using TA.Domain.Interfaces;
 
 public class SessionValidationMiddleware
@@ -19,10 +18,10 @@ public class SessionValidationMiddleware
         {
 
 
-            foreach (var claim in context.User.Claims)
-            {
-                Console.WriteLine($"Claim Type: {claim.Type}, Value: {claim.Value}");
-            }
+            //foreach (var claim in context.User.Claims)
+            //{
+            //    Console.WriteLine($"Claim Type: {claim.Type}, Value: {claim.Value}");
+            //}
 
             if (!context.User.Identity.IsAuthenticated)
             {
