@@ -37,8 +37,6 @@ namespace TA.Presentation.Webapi
                     ValidateAudience = false,           
                     ValidateLifetime = true,           
                     ValidateIssuerSigningKey = true,  
-                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
                 };
             });
