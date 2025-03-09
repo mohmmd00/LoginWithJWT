@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography; 
+﻿using System.Security.Cryptography;
 using System.Text;
 using TA.Domain.Interfaces;
 
@@ -8,10 +8,6 @@ namespace TA.Application.Services
     {
         public string HashPassword(string password, string salt)
         {
-            if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(salt))
-                throw new ArgumentNullException("Password or salt cannot be null or empty.");
-            
-
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password); // change password type string to bytes 
             byte[] saltBytes = Encoding.UTF8.GetBytes(salt); // change salt string to bytes
 
@@ -23,18 +19,10 @@ namespace TA.Application.Services
             }
         }
 
-        public bool VerifyPassword(string password, string salt, string hash)
+        public bool VerifyPassword(string password, string salt, string alreadyHashedPassword)
         {
-            if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(salt) || string.IsNullOrEmpty(hash))
-            {
-                return false;
-            }
-            else
-            {
-                string resultOfHash = HashPassword(password, salt);
-
-                return resultOfHash == hash;
-            }
+            string hashResult = HashPassword(password, salt);
+            return hashResult == alreadyHashedPassword;
         }
     }
 }
