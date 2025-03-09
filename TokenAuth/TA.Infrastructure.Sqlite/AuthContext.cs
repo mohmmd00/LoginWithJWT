@@ -18,7 +18,13 @@ namespace TA.Infrastructure.Sqlite
             modelBuilder.Entity<Session>().HasKey(key => key.UserId);
 
 
-            modelBuilder.Entity<Session>().HasOne<User>().WithOne().HasForeignKey<Session>(x => x.UserId);
+            modelBuilder.Entity<Session>()
+                .HasOne(s => s.User)
+                .WithOne(u => u.Session)  
+                .HasForeignKey<Session>(s => s.UserId); 
+
+
+
             base.OnModelCreating(modelBuilder);
         }
     }
