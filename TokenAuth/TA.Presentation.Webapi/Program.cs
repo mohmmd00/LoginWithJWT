@@ -23,8 +23,8 @@ namespace TA.Presentation.Webapi
 
 
 
-            builder.Services.AddTransient<IPasswordService, PasswordService>();
-            builder.Services.AddTransient<IJwtService, JwtService>();
+            builder.Services.AddSingleton<IPasswordService, PasswordService>();
+            builder.Services.AddSingleton<IJwtService, JwtService>();
 
 
 
