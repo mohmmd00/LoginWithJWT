@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TA.Application.DTO_s;
 using TA.Application.Services;
@@ -57,7 +56,7 @@ namespace TA.Presentation.Webapi.Controllers
         [HttpGet("SecretMessage")]
         public IActionResult GetSecretMessage() 
         {
-            return Ok("This is my secret message : 1231231231232fjeoigneoerGVERGVBIe");
+            return Ok("This is my secret message : JohnDoe");
         }
 
     }
